@@ -3,28 +3,28 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button, Checkbox, Label, TextInput, Card } from 'flowbite-react';
-import { useAuth } from '@/hooks/useauth';
+// import { useAuth } from '@/hooks/useauth';
+import {signIn, signOut, useSession} from 'next-auth/react';
+
 
 export default function Login() {
 
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');  
+    
+  const router= useRouter()
 
-  const { signIn, user } = useAuth();
-  const router = useRouter()
-
-  const handleLogin = () => {
+  const handleLogin = async () => {
       console.log('Email:', email);
       console.log('Password:', password);
-      signIn(email, password);
-  };
-  
-  useEffect(() => {
-    if (user) {
-      //router.push('/Dashboard');
+  const res = await signIn("credentials", { email, password ,redirect: false});
+  console.log("REsponse ", res);
+  if (res.status === 200) {
+    router.push('/Dashboard')
     }
-    
-  }, [user]);
+
+  };
     
   return (
     <div className="min-h-screen flex items-center justify-center">

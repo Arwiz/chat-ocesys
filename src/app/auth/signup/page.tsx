@@ -1,11 +1,21 @@
 import React from 'react'
+import { getServerSession } from 'next-auth/next';
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
 
 type Props = {}
 
-const page = (props: Props) => {
+export default async function  Register(props: Props) {
+
+    const session = await getServerSession(authOptions)
+    console.log('session of the server', session);
+
+    if (session) {
+        redirect('/Dashboard');
+    }
+
   return (
-    <div>sign page</div>
+    <div>Sign up page qw3er</div>
   )
 }
-
-export default page

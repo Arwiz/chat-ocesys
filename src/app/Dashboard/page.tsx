@@ -2,7 +2,7 @@ import React from 'react'
 
 type Props = {}
 async function getData(token: string){
-    const res = await fetch('https://web.ocesys.com/api/project', {
+    const res = await fetch('https://web.ocesys.com/api/docs/PROJECT', {
         headers: { Authorization: token }
     })
     // The return value is *not* serialized
@@ -18,12 +18,13 @@ async function getData(token: string){
   }
    
 const Dashboard =  async (props: Props) => {
-    // const data = await getData()
- 
+    
 
 
   return (
-    <div>Dashboard</div>
+      <div>
+          Dashboard
+      </div>
   )
 }
 
