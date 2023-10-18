@@ -35,7 +35,7 @@ export const AuthContexProvider = ({children}: { children: React.ReactNode}) => 
         setUser(person);
         console.log('this is sign in function')
 
-        router.push('/Dashboard');
+        router.push('/dashboard');
     }
 
     const signOut = () => {

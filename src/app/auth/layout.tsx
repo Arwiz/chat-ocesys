@@ -14,7 +14,6 @@ const Layout = ({ children }: Props) => {
 
   return (
       <div className='bg-color-red-500'>
-          <div>HHello from Internal Layout</div>
           {children}
       </div>
   )

@@ -12,7 +12,7 @@ export default async function  Register(props: Props) {
     console.log('session of the server', session);
 
     if (session) {
-        redirect('/Dashboard');
+        redirect('/dashboard');
     }
 
   return (

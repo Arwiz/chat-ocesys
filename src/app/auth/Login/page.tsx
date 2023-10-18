@@ -21,18 +21,18 @@ export default function Login() {
   const res = await signIn("credentials", { email, password ,redirect: false});
   console.log("REsponse ", res);
   if (res.status === 200) {
-    router.push('/Dashboard')
+    router.push('/dashboard')
     }
 
   };
     
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-lg max-w-md">
+      <Card className="p-8 rounded shadow-lg max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
         <form>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-200">
               Email
             </label>
             <input
@@ -45,7 +45,7 @@ export default function Login() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-200">
               Password
             </label>
             <input
@@ -67,7 +67,7 @@ export default function Login() {
             </button>
           </div>
         </form>
-      </div>
+      </Card>
     </div>
   );
 }
