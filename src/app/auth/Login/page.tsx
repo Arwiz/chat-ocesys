@@ -28,9 +28,13 @@ export default function Login() {
   };
     
 return (
-  <div className=" min-h-screen flex items-center justify-center ">
-      <Card className="p-8 rounded shadow-lg max-w-md">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">OCESYS</h1>
+  <div className=" min-h-screen min-w-full flex justify-evenly">
+          <div className=" bg-yellow-300 flex justify-center items-center w-1/2">
+              <object data="/images/ocesys_logo.svg" height="500"/>
+          </div>
+    <div className=" flex justify-center items-center w-1/2 min-h-screen">
+    <Card className=" flex rounded shadow-lg w-80 ">
+      {/* <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">OCESYS</h1> */}
         <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
         <form>
           <div className="mb-4">
@@ -70,6 +74,9 @@ return (
           </div>
         </form>
       </Card>
+              
+          </div>
+      
     </div>
   );
 }
