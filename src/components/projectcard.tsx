@@ -2,6 +2,7 @@ import { Button } from 'flowbite-react';
 import React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { KeyValue } from './keyval';
+import Link from 'next/link';
 
 type Props = {
     item: any,
@@ -13,7 +14,8 @@ const ProjectCard = ({
     callBack = (selectedItem: any) => { }
     
 }: Props) => {
-  return (
+    return (
+        <Link href={{ pathname: '/dashboard/poker/pokerroom', query: { project_id: item._id} }}>
       <div className='flex-1 outline-1 border-cyan-500 bg-gray-900 p-2 m-5 ml-10 mr-10 rounded-md shadow-purple-950 bg-slate-8 hover:scale-105 transition-all duration-100 shadow'>
           <div className='flex'>
               <div className='flex-1'>
@@ -32,7 +34,8 @@ const ProjectCard = ({
                   </Button>
               </div>
         </div>
-      </div>
+            </div>
+            </Link>
   )
 }
 

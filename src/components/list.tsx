@@ -5,10 +5,11 @@ type T = any;
 
 type Props = {
   items: T[],
-  rowSelectedHandler: (t:T)=>void
+  rowSelectedHandler?: (t:T)=>void
 }
 
 const ItemList = (props: Props) => {
+
   return (
     <div className='flex-1 h-max overflow-y-auto'>
       {

@@ -27,47 +27,14 @@ interface Participant {
 
 const page = (props: Props) => {
 
-  const [participant, setParticipant] = useState<Participant[]>([])
-  const [stories, setStories] = useState<Story[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
   
   const session = useSession();
   const router = useRouter();
 
 
 
-  const getStories = (project: Project) => {
-    async function fetStories() {
-
-      console.log('project', project);
-      try {
-
-        const token = session.data?.user?.token;
-        const headers = {
-          Authorization: token,
-          'Content-Type': 'application/json',
-        };
-        if (token) {
-          const response = await fetch(`http://localhost:3000/api/stories/${project._id}`, {
-            method: 'GET',
-            headers
-          });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-    
-          const data = await response.json();
-          console.log('sdfsdfdfss data', data)
-          setStories(data);
-        }
-        
-      } catch (error) {
-        
-      } finally {
-      }
-    }
-    fetStories();
-  }
-
+  
   useEffect( () => {
     // Fetch all used list
     console.log('1==>')
@@ -91,7 +58,7 @@ const page = (props: Props) => {
     
           const data = await response.json();
           console.log('sdfsdfdfss data', data)
-          setParticipant(data);
+          setProjects(data);
         }
         
       } catch (error) {
@@ -111,22 +78,12 @@ const page = (props: Props) => {
   return (
     <>
       <div className='flex'>
-      <blockquote className="text-xl italic font-semibold text-gray-900 dark:text-white">
+      <blockquote className="text-xl italic font-semibold text-gray-900 dark:text-white text-center mt-10 mb-10">
           <p>"Projects"</p>
       </blockquote>
 
-        <ItemList items={participant} rowSelectedHandler={function (t: any): void {
-          getStories(t);
-        }} />
-        {/* <div className='flex-1 h-max overflow-y-auto'>
-        {
-          stories.map((user) => <StoryCard  item={user} callBack={(story: Story)=>{
-            console.log('story', story);
-          }}></StoryCard>)
-          
-          }
-          </div> */}
-
+        <ItemList items={projects} />
+      
       </div>
       </>
   )
