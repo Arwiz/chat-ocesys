@@ -77,12 +77,12 @@ const page = (props: Props) => {
  
   return (
     <>
-      <div className='flex'>
-      <blockquote className="text-xl italic font-semibold text-gray-900 dark:text-white text-center mt-10 mb-10">
-          <p>"Projects"</p>
+      <div className='flex-1'>
+      <blockquote className="text-xl font-semibold text-gray-900 dark:text-white text-center mt-10 mb-10">
+          <p>Projects</p>
       </blockquote>
 
-        <ItemList items={projects} />
+      <ItemList items={projects} />
       
       </div>
       </>
