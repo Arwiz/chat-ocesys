@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { socket } from '@/lib/socket';
 
-import { Button, Card, Avatar } from 'flowbite-react';
+import { Button, Card, Avatar, Dropdown } from 'flowbite-react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 
@@ -236,44 +236,47 @@ const getStories = (projectId: string) => {
     
       <h6 className="text-lg font-bold dark:text-white text-center mt-10">PokerRoom</h6>
       <p className="m-10 text-gray-500 dark:text-gray-400">Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data from other software development tools, so your IT support and operations teams have richer contextual information to rapidly respond to requests, incidents, and changes.</p>
-      <div className='flex '>
-      {
-          participant?.map((user) =>
+  
+
+      <div className='items-center justify-center ' >
+         <div className='flex justify-evenly'>
+          <p className="mr-10 text-gray-500 dark:text-gray-400">Story for Poker</p>
+          <Dropdown label={selectedStory?.name || " Select Stories"} dismissOnClick={true}>
+            {
+              stories.map((story) => <Dropdown.Item onClick={()=> setSelectedStory(story)}>{story?.name}</Dropdown.Item>)
+            }
+          </Dropdown>
+        </div> 
+        {selectedStory && <div className='flex mt-10 mb-10'>
+          {
+            participant?.map((user) =>
               <div className="flex-1 flex-wrap gap-2">
                 
-      <Avatar
-        alt={user.email}
-        img="/images/people/default.jpeg"
-        rounded
-        />
-              <p className="text-2xl font-semibold text-gray-900 dark:text-white text-center">{user?.vote }</p>
- 
-    </div>
-    )
-      }
-      </div>
-
-      <div className='flex items-center justify-center m-10' >
-         <div className='flex-1 h-max overflow-y-auto'>
-        {
-          stories.map((user) => <StoryCard  item={user} callBack={(story: Story)=>{
-            console.log('story', story);
-            setSelectedStory(story);
-          }}></StoryCard>)
-          
+                <Avatar
+                  alt={user.email}
+                  img="/images/people/default.jpeg"
+                  rounded
+                />
+                <p className="text-2xl font-semibold text-gray-900 dark:text-white text-center">{  (user?.vote === 0) ? 'N/A' : user?.vote }</p>
+              </div>)
+            
           }
-          </div> 
-        <Card className='md:h-1/2 md:w-1/2'>
-        <p className="text-2xl font-semibold text-gray-900 dark:text-white text-center">{selectedStory?.name }</p>
-    <div className='flex-1 items-center justify-center flex-wrap  grid grid-rows-3 grid-flow-col'>
-      {
-        selectedStory && pokerNumbers.map((num) => 
-            <Card onClick={() => saveMyPoker(num)}  className="m-5 p-2 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-            {num} 
-            </Card>
-          )}
-         </div>
-      </Card>
+        </div>
+        }
+        <div className='flex justify-center items-center'>
+        {selectedStory && <Card className='md:h-1/2 md:w-1/2'>
+          <p className="text-2xl font-semibold text-gray-900 dark:text-white text-center">{selectedStory?.name}</p>
+          <div className='flex-1 items-center justify-center flex-wrap  grid grid-rows-3 grid-flow-col'>
+            {
+              selectedStory && pokerNumbers.map((num) =>
+                <Card onClick={() => saveMyPoker(num)} className="m-5 p-2 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                  {num}
+                </Card>
+              )}
+          </div>
+        </Card>
+        }
+        </div>
       </div>
       </div>
   </>
