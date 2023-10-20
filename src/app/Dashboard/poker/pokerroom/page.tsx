@@ -257,7 +257,8 @@ const getStories = (projectId: string) => {
                   img="/images/people/default.jpeg"
                   rounded
                 />
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white text-center">{  (user?.vote === 0) ? 'N/A' : user?.vote }</p>
+                <p className="text-2xl font-semibold text-gray-900 dark:text-white text-center m-2">{(user?.vote === 0) ? 'N/A' : user?.vote}</p>
+                <p className="text-sx font-semibold text-gray-900 dark:text-white text-center">{ user?.email}</p>
               </div>)
             
           }
