@@ -247,7 +247,7 @@ const getStories = (projectId: string) => {
             }
           </Dropdown>
         </div> 
-        {selectedStory && <div className='flex mt-10 mb-10'>
+        {selectedStory && <div className='flex mt-10 mb-4'>
           {
             participant?.map((user) =>
               <div className="flex-1 flex-wrap gap-2">
@@ -267,7 +267,7 @@ const getStories = (projectId: string) => {
         <div className='flex justify-center items-center'>
         {selectedStory && <Card className='md:h-1/2 md:w-1/2'>
           <p className="text-2xl font-semibold text-gray-900 dark:text-white text-center">{selectedStory?.name}</p>
-          <div className='flex-1 items-center justify-center flex-wrap  grid grid-rows-3 grid-flow-col'>
+          <div className='flex-1 items-center justify-center flex-wrap  grid grid-cols-3 grid-flow-row'>
             {
               selectedStory && pokerNumbers.map((num) =>
                 <Card onClick={() => saveMyPoker(num)} className="m-5 p-2 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
