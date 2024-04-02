@@ -48,7 +48,7 @@ const page = (props: Props) => {
           'Content-Type': 'application/json',
         };
         if (token) {
-          const response = await fetch('http://localhost:3000/api/Docs/PROJECT', {
+          const response = await fetch('http://localhost:3003/api/Docs/PROJECT', {
             method: 'GET',
             headers
           });

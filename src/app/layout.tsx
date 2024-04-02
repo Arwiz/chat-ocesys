@@ -15,18 +15,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
   }) {
-    // const session = await getServerSession();
-    // if (session) {
-    //     redirect('/dashboard');
-    // } else {
-    //     redirect('/auth/login');
-    // }
   
   return (
     <html lang="en" >
-      <body className='dark'>
+      <body className="dark bg-cover bg-center bg-[url('/background.jpeg')]">
         <NAAuthProvider>
-          {children}
+        <div className='ml-5 mr-5 bg-black'>
+            {children}
+          </div>
           </NAAuthProvider>
       </body>
     </html>

@@ -8,3 +8,4 @@ export const NAAuthProvider = ({children}: { children: React.ReactNode}) => {
         </SessionProvider>
       );
 }
+

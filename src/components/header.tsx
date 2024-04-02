@@ -28,6 +28,10 @@ const links = [
         title: "Profile",
         link: "/dashboard/profile"
     },
+    {
+        title: "Roster",
+        link: "/dashboard/roster"
+    },
 ];
 
 type Props = {}
@@ -40,7 +44,7 @@ const Header = (props: Props) => {
           </div>
         <div className='xm:p-5  sm:flex md:flex md:float-right justify-end md:gap-6  md:h-14'>
               {
-                  links?.map(({link , title}) => ( <div id={link} className='ml-10 pt-4 hover:text-orange-400 focus:ring-orange-400'>
+                  links?.map(({link , title}) => (<div id={link} className='ml-10 pt-4 hover:text-orange-400 focus:ring-orange-400'>
                       <Link href={link}>{title}</Link>
                   </div>))
               }

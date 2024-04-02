@@ -54,7 +54,7 @@ const page = (props: any) => {
       
       axios
         .post(
-          'http://localhost:3000/api/poker/roomjoin',
+          'http://localhost:3003/api/poker/roomjoin',
           {
             story_id: selectedStory?._id,
           },
@@ -89,7 +89,7 @@ const page = (props: any) => {
 
       axios
         .post(
-          'http://localhost:3000/api/poker/roomleave',
+          'http://localhost:3003/api/poker/roomleave',
           {
             story_id: selectedStory?._id,
           },
@@ -173,7 +173,7 @@ const saveMyPoker = (poker: number) => {
 
     axios
       .post(
-        'http://localhost:3000/api/poker',
+        'http://localhost:3003/api/poker',
         {
           story_id: selectedStory?._id,
           poker: poker,
@@ -209,7 +209,7 @@ const getStories = (projectId: string) => {
         'Content-Type': 'application/json',
       };
       if (token) {
-        const response = await fetch(`http://localhost:3000/api/stories/${projectId}`, {
+        const response = await fetch(`http://localhost:3003/api/stories/${projectId}`, {
           method: 'GET',
           headers
         });
