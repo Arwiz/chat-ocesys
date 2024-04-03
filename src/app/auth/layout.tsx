@@ -1,22 +1,17 @@
-'use client'
-import React, { useEffect } from 'react'
+'use client';
+import React, { useEffect } from 'react';
 import { useAuth } from '@/hooks/useauth';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
- import { authOptions } from '../api/auth/[...nextauth]/route';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 
 type Props = {
-    children: React.ReactNode
-}
+    children: React.ReactNode;
+};
 
 const Layout = ({ children }: Props) => {
+    return <div className="bg-color-red-500">{children}</div>;
+};
 
-  return (
-      <div className='bg-color-red-500'>
-          {children}
-      </div>
-  )
-}
-
-export default Layout
+export default Layout;

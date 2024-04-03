@@ -1,14 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-type Props = {}
-   
+type Props = {};
+
 const Dashboard = async (props: Props) => {
-    
-    
-  return (
-      <div className='flex'>
-      </div>
-  )
-}
+    return <div className="flex"></div>;
+};
 
-export default Dashboard
+export default Dashboard;
