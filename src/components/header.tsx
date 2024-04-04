@@ -7,6 +7,10 @@ import Profile from './profile';
 
 const links = [
     {
+        title: 'Home',
+        link: '/dashboard',
+    },
+    {
         title: 'Products',
         link: '/dashboard/products',
     },

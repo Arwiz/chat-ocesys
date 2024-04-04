@@ -8,6 +8,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function Login() {
+    console.log('login');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -22,7 +23,7 @@ export default function Login() {
             redirect: false,
         });
         console.log('REsponse ', res);
-        if (res.status === 200) {
+        if (res?.status === 200) {
             router.push('/dashboard');
         }
     };
