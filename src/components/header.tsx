@@ -3,8 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Profile from './profile';
 
-// const links = ["Products", "Analytics", "Settings","Contact Us", "Profile"];
-
 const links = [
     {
         title: 'Home',

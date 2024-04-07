@@ -1,13 +1,21 @@
 import type { Config } from 'tailwindcss';
+const flowbite = require('flowbite-react/tailwind');
 
 const config: Config = {
-    darkMode: 'class',
+    // darkMode: 'class',
+    darkMode: 'media',
     content: [
         './src/components/**/*.{js,ts,jsx,tsx,mdx}',
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
         './node_modules/flowbite-react/**/*.js',
         './pages/**/*.{ts,tsx}',
         './public/**/*.html',
+        './app/**/*.{js,ts,jsx,tsx,mdx}',
+        './pages/**/*.{js,ts,jsx,tsx,mdx}',
+        './components/**/*.{js,ts,jsx,tsx,mdx}',
+        // Or if using `src` directory:
+        './src/**/*.{js,ts,jsx,tsx,mdx}',
+        flowbite.content(),
     ],
     theme: {
         extend: {
@@ -18,6 +26,6 @@ const config: Config = {
             // },
         },
     },
-    plugins: [require('flowbite/plugin')],
+    plugins: [flowbite.plugin()],
 };
 export default config;
