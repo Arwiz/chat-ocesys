@@ -28,7 +28,7 @@ const page = async (props: Props) => {
  
 
     return (<div className=" min-h-screen min-w-full">
-        <div>Papers</div>
+        {/* <div>Papers</div> */}
         {data.map((ob, index) => (
             <div
                 key={index}
@@ -39,7 +39,7 @@ const page = async (props: Props) => {
                 </Link>
             </div>
         ))}
-        <div>Papers</div>
+        {/* <div>Papers</div> */}
     </div>)
 };
 
