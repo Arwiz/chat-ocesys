@@ -6,6 +6,7 @@ import { NAAuthProvider } from '@/providers/NAAuthProvider';
 import AppBar from '@/components/profile';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import StoreProvider from './StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,9 +18,11 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body className="dark bg-cover bg-center bg-[url('/background.jpeg')]">
+                <StoreProvider>
                 <NAAuthProvider>
                     <div className="ml-5 mr-5 bg-black">{children}</div>
-                </NAAuthProvider>
+                    </NAAuthProvider>
+                    </StoreProvider>
             </body>
         </html>
     );

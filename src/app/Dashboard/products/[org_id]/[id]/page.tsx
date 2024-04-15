@@ -1,7 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { Button } from 'flowbite-react';
+import { Accordion, Button } from 'flowbite-react';
 import Question from '@/components/question';
+import QuestionRenderer from '@/components/question';
+import QuestionListRenderer from '@/components/questionlist';
+import GroupAccordian from '@/components/GroupAccordian';
 
 async function getData(Id: string) {
 
@@ -29,8 +32,8 @@ const page = async ({ params }: any) => {
   console.log('....data', data);
  
   return <div className=" min-h-screen min-w-full">
-      <h1>{data?.title}</h1>
-      <Question questionData={data?.questions} duration={data.duration}></Question>
+    <h1>{data?.title}</h1>
+    <GroupAccordian data={data}></GroupAccordian>
   </div>
 };
 

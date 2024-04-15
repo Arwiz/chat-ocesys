@@ -1,17 +1,15 @@
 import React from 'react';
 
-
-
-/*
-Create Questions list
-*/
+import Counter from '@/components/counter';
 
 type Props = {};
 
 const page = (props: Props) => {
-
-
-    return <div>Profile</div>;
+    return (<div>
+        <h2>Profile</h2>
+        <Counter></Counter>
+    </div>
+    );
 };
 
 export default page;
