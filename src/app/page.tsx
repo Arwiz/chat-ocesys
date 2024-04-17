@@ -14,11 +14,6 @@ interface PageProps {
 const Home: React.FC<PageProps> = async ({ children }) => {
   const session = await getServerSession();
   console.log(session);
-      if (session) {
-        redirect('/dashboard');
-      } else {
-        redirect('/auth/login');
-      }
   return <main>{children}</main>;
 };
 

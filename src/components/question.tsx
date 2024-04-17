@@ -7,11 +7,16 @@ import { Question } from './../types/questions';
 import { QuestionType } from '@/types/question_type_enum';
 import FileUpload from './FileUpload';
 import Remarks from './Remarks';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { AnswerType, update_answer } from '@/redux/slices/auditSlice';
+import { RootState } from '@/app/store';
 
 interface Props {
     questionData: Question[];
     duration?: number;
     title?: string
+    group_id?: string
 }
 
 interface Answer {
@@ -20,50 +25,82 @@ interface Answer {
     answer_text?: string;
 }
 
-const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title }) => {
-    const [selectedOptions, setSelectedOptions] = useState<{ [questionId: string]: string[] }>({});
+const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title , group_id}) => {
+    const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
     const [allQuestionsAttempted, setAllQuestionsAttempted] = useState<boolean>(false);
     const [showError, setShowError] = useState<boolean>(false);
-    const router = useRouter();
+  
+    const dispatch = useDispatch();
+    
+    const allAnswers = useSelector((state: RootState) => state.audit.current_audit?.answers) || {};
+    console.log('allAnswers', allAnswers);
+
+
+
+    useEffect(() => {  
+        const currentQuestion = questionData[currentQuestionIndex];
+        if (currentQuestion?._id && allAnswers[currentQuestion?._id]) {
+            setSelectedOptions(() => (currentQuestion?._id) ? allAnswers[currentQuestion?._id]?.answers : []);
+        }            
+     }, [currentQuestionIndex])
+
 
     useEffect(() => {
         // Check if all questions have been attempted
         const attempted = questionData.every(question =>
-            question._id in selectedOptions &&
-            (selectedOptions[question._id].length > 0 || selectedOptions[question._id].length === 0)
+            question._id in allAnswers &&
+            (allAnswers[question._id].length > 0 || allAnswers[question._id].length === 0)
         );
         setAllQuestionsAttempted(attempted);
-    }, [selectedOptions, questionData]);
+    }, [allAnswers, questionData]);
+
 
     const handleOptionSelect = (optionId: string) => {
         setSelectedOptions((prevSelectedOptions) => {
             const questionId = questionData[currentQuestionIndex]._id;
-            const prevOptions = prevSelectedOptions[questionId] || [];
+            const prevOptions = prevSelectedOptions || [];
 
             if (prevOptions.includes(optionId)) {
+
                 // If option is already selected, remove it
                 const updatedArray = prevOptions.filter(id => id !== optionId);
                 if (updatedArray.length > 0) {
-                    return { ...prevSelectedOptions, [questionId]: prevOptions.filter(id => id !== optionId) };    
+                    return updatedArray;    
                 }
-                const result = { ...prevSelectedOptions };
-                delete result[questionId];
-                return result;
-
-                
+                return prevOptions;
+            
             } else {
                 if (questionData[currentQuestionIndex].question_type === QuestionType.OPTION) {
-                    return { ...prevSelectedOptions, [questionId]: [ optionId] };
+                    return [ optionId];
                 }
                 // Otherwise, add the option
-                return { ...prevSelectedOptions, [questionId]: [...prevOptions, optionId] };
+                return [...prevOptions, optionId];
             }
         });
     };
 
     const handleNext = () => {
+        const questionId = questionData[currentQuestionIndex]._id;
+        if (questionId) {
+            const answerOptions = selectedOptions|| [];   
+         if (answerOptions?.length > 0) {
+                 const answer: AnswerType = {
+                        question_id: questionId,
+                        group_id,
+                        answers: answerOptions,
+                        remarks: 'No Remars found',
+                        uploads: []    
+                 };
+             dispatch(update_answer({answer}))
+             
+        }
+
+
         setCurrentQuestionIndex((prevIndex) => Math.min(prevIndex + 1, questionData.length - 1));
+       
+
+        }   
     };
 
     const handleBack = () => {
@@ -95,7 +132,7 @@ const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title }) =>
     };
 
     const currentQuestion = questionData[currentQuestionIndex];
-    const currentSelectedOptions = selectedOptions[currentQuestion._id] || [];
+    const currentSelectedOptions = selectedOptions|| [];
 
     return (
         <div className='flex-1 justify-items-center p-5'>
@@ -120,8 +157,11 @@ const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title }) =>
                             type={currentQuestion.question_type === 'MULTI_SELECT' ? 'checkbox' : 'radio'}
                             id={option._id}
                             name={currentQuestion._id}
-                            checked={currentSelectedOptions.includes(option._id)}
-                            onChange={() => handleOptionSelect(option._id)}
+                            checked={currentSelectedOptions?.includes(option._id)}
+                            onChange={() => {
+                                console.log('Check', option._id);
+                                handleOptionSelect(option._id)
+                            }}
                         />
                         <label className='p-2' htmlFor={option._id}>{option.title}</label>
                     </li>
@@ -142,12 +182,18 @@ const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title }) =>
             {/* Navigation Buttons */}
             <div className='flex justify-end'>
                 <div className='flex justify-between p-2'>
-                    <button   className='m-5 bg-green-900 w-40 rounded border border-cyan-900 hover:bg-slate-500'  onClick={handleBack} disabled={currentQuestionIndex === 0}>
+                    <button   className='m-5 w-40 rounded border border-cyan-900 hover:bg-slate-500 disabled:bg-slate-500'  onClick={handleBack} disabled={currentQuestionIndex === 0}>
                         Back
-                    </button>
-                    <button className='m-5 bg-green-900 w-40 rounded border border-cyan-900 hover:bg-slate-500'  onClick={handleNext} disabled={currentQuestionIndex === questionData.length - 1}>
-                        Next
-                    </button>
+                        </button>
+                        {(currentQuestionIndex !== questionData.length - 1 &&
+                            <button className='m-5 w-40 rounded border border-cyan-900 hover:bg-slate-500 disabled:bg-slate-500' onClick={handleNext} disabled={currentQuestionIndex === questionData.length - 1 || currentSelectedOptions.length === 0}>
+                                Next
+                            </button>
+                        )}
+                        {(currentQuestionIndex === questionData.length - 1 &&
+                            <button className='m-5 w-40 rounded border border-cyan-900 hover:bg-slate-500 disabled:bg-slate-500' onClick={handleNext} disabled={ currentSelectedOptions.length === 0}>
+                                Done
+                            </button>)}
                 </div>
             </div>
           </div>

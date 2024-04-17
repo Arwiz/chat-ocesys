@@ -1,10 +1,12 @@
 import profileReducer from './dashboard/profile/profileSlice';
+import auditReducer from '../redux/slices/auditSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
             profile: profileReducer,
+            audit: auditReducer,
         },
     });
 };

@@ -17,7 +17,8 @@ export default async function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className="dark bg-cover bg-center bg-[url('/background.jpeg')]">
+            {/* <body className="dark bg-cover bg-center bg-[url('/background.jpeg')]"> */}
+            <body className="dark">
                 <StoreProvider>
                 <NAAuthProvider>
                     <div className="ml-5 mr-5 bg-black">{children}</div>

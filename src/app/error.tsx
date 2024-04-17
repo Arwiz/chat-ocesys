@@ -26,7 +26,7 @@ const error = (props: Props) => {
             />
             <h2 className="text-xl font-medium">Something went wrong!</h2>
             <Button>
-                <Link href="/documents">Go back</Link>
+                <Link href="/dashboard">Go back</Link>
             </Button>
         </div>
     );

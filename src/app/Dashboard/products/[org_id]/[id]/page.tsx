@@ -31,8 +31,7 @@ const page = async ({ params }: any) => {
   const data = await getData(params.id);
   console.log('....data', data);
  
-  return <div className=" min-h-screen min-w-full">
-    <h1>{data?.title}</h1>
+  return <div className="flex-1">
     <GroupAccordian data={data}></GroupAccordian>
   </div>
 };

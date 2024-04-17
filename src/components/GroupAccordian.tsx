@@ -3,12 +3,34 @@ import { Accordion } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import QuestionRenderer from './question'
 import { Button } from './Button'
+import { useDispatch } from 'react-redux'
+import { start_audit } from '@/redux/slices/auditSlice'
+import PreviewModal from './PreviewModal'
+import GroupAccordianPreview from './GroupAccordianPreview'
 
 type Props = {
     data: any
 }
 
 const GroupAccordian = (props: Props) => {
+
+  const { data } = props;
+
+   const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+  
+  
+
+  const audit_id = props.data._id;
+
+  const dispatch = useDispatch();
 
     const [selectedGroup, setSelectedGroup] = useState<any>(null);
 
@@ -18,11 +40,21 @@ const GroupAccordian = (props: Props) => {
          }
     },[]);
 
+  
+   useEffect(() => {
+        if (audit_id) {
+            dispatch(start_audit({audit_id}));
+         }
+    },[audit_id]);
+  
 
     return (
-      <div className='m-5  bg-gray-800 '>
+      <div className='bg-gray-950 flex-1'>
+        <div className=' p-5 flex justify-center'>
+         <h1 className=' text-yellow-200 text-3xl'>{data.title}</h1>
+        </div>
         <div className='flex'>
-      <div className='border-r border-gray-300 h-full '>
+      <div className='border-r  min-h-full border-gray-300 '>
           {
             props?.data.groups.map((row:any) => (
 
@@ -36,22 +68,26 @@ const GroupAccordian = (props: Props) => {
           }
     </div>
        <div className='flex-1'>
-         {(selectedGroup && <div className='flexflex-1 bg-gray-950 m-5'>
-                <h2 className=' mt-10 m-5 pt-10 font-bold border-b-2  p-5 '>{selectedGroup.title}</h2>
+         {(selectedGroup && <div className='flexflex-1 bg-gray-950'>
+                <h2 className=' mt-10 m-5 pt-10 font-bold border-b-2 '>{selectedGroup.title}</h2>
                 <QuestionRenderer questionData={selectedGroup?.questions} title={selectedGroup.title} ></QuestionRenderer>
             </div>
         )}
           </div>
         </div>
-        <div className='flex justify-center items-center bg-slate-500 '>
-           <Button title='Save' handler={() => {
+        <div className='flex justify-end items-center  border-t-2  p-5'>
+           <Button title='Verify...    ' handler={() => {
             console.log('Submit called');
+            handleOpenModal();
             }}></Button>
             
-             <Button title='Draft' handler={() => {
-            console.log('Draft called');
-          }}></Button>
         </div>
+        {/* Preview Model to verify all the inputs */}
+        <PreviewModal isOpen={isModalOpen} onClose={handleCloseModal}  >
+          <div>
+            <GroupAccordianPreview data={props.data} ></GroupAccordianPreview>
+          </div>
+        </PreviewModal>
         
     </div>
   )
