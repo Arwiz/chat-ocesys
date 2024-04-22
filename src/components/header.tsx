@@ -38,24 +38,24 @@ type Props = {};
 
 const Header = (props: Props) => {
     return (
-        <div className=" bg-yellow-300 sm:flex-1 md:flex justify-between items-center  md:h-14 sticky">
-            <div className="flex justify-start items-center pl-5 pb-5">
+        <div className="sm:flex-1  md:flex bg-yellow-400  justify-between items-center sticky  md:h-14 ">
+            <div className="flex justify-start items-center pl-5 md:pb-5 xm: pt-1">
                 <object
                     data="/images/ocesys_logo.svg"
                     width="100"
                     height="100"
                 />
             </div>
-            <div className="xm:p-5  sm:flex md:flex md:float-right justify-end md:gap-6  md:h-14">
+            <div className="sm:pl-5 md:flex   md:float-right justify-end   md:h-14">
                 {links?.map(({ link, title }) => (
                     <div
                         id={link}
-                        className="ml-10 pt-4 hover:text-orange-400 focus:ring-orange-400"
+                        className="p-5 pt-4 pb-4 hover:text-blue-800 focus:ring-blue-800"
                     >
                         <Link href={link}>{title}</Link>
                     </div>
                 ))}
-                <Profile></Profile>
+                {/* <Profile></Profile> */}
             </div>
         </div>
     );

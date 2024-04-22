@@ -6,7 +6,7 @@ import { NAAuthProvider } from '@/providers/NAAuthProvider';
 import AppBar from '@/components/profile';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import StoreProvider from './StoreProvider';
+import StoreProvider from '../redux/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 

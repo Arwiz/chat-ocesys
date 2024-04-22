@@ -14,13 +14,13 @@ const Profile = () => {
     }
 
     return (
-        <div className="bg-gradient-to-b from-cyan-50 to-cyan-200 p-2 flex gap-5 ">
+        <div className="p-2 flex float-start ">
             <div className="ml-auto flex gap-2">
                 {session?.user ? (
                     <>
                         <p className="text-sky-600"> {session.user.email}</p>
                         <button
-                            className="text-red-500"
+                            className=" text-white underline underline-offset-2"
                             onClick={() => signOut()}
                         >
                             Sign Out

@@ -3,10 +3,11 @@ import { Accordion } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import QuestionRenderer from './question'
 import { Button } from './Button'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { start_audit } from '@/redux/slices/auditSlice'
 import PreviewModal from './PreviewModal'
 import GroupAccordianPreview from './GroupAccordianPreview'
+import { RootState } from '@/redux/store'
 
 type Props = {
     data: any
@@ -15,6 +16,7 @@ type Props = {
 const GroupAccordian = (props: Props) => {
 
   const { data } = props;
+    const all_answers = useSelector((state: RootState)=> state.audit.current_audit?.answers)
 
    const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -85,7 +87,7 @@ const GroupAccordian = (props: Props) => {
         {/* Preview Model to verify all the inputs */}
         <PreviewModal isOpen={isModalOpen} onClose={handleCloseModal}  >
           <div>
-            <GroupAccordianPreview data={props.data} ></GroupAccordianPreview>
+            <GroupAccordianPreview data={props.data} title={data.title} all_answers={all_answers}></GroupAccordianPreview>
           </div>
         </PreviewModal>
         

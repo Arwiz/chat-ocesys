@@ -4,28 +4,55 @@ import React, { useEffect, useState } from 'react'
 import QuestionRenderer from './question'
 import { Button } from './Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { start_audit } from '@/redux/slices/auditSlice'
+import { AuditAnswerType, start_audit } from '@/redux/slices/auditSlice'
 import PreviewModal from './PreviewModal'
 import QuestionListRenderer from './questionlist'
-import { RootState } from '@/app/store'
+import { RootState } from '@/redux/store'
 
 type Props = {
-  data: any
+  data: any,
+  title: string,
+  all_answers: AuditAnswerType
 ,}
 
 const GroupAccordianPreview = (props: Props) => {
 
-
-  const all_answers = useSelector((state: RootState)=> state.audit.current_audit?.answers)
+  const { data, all_answers  } = props;
 
   const dispatch = useDispatch();
   
-  //  useEffect(() => {
-  //       // if (audit_id) {
-  //       //     dispatch(start_audit({audit_id}));
-  //       //  }
-  //   },[audit_id]);
-  
+
+  const save_answer = async (  paper_id: string,
+  user_id: string,
+  status: string,
+    answers: any) => {
+    try {
+      // Make the API call to save data
+      const response = await fetch('http://localhost:3003/questions/answers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          paper_id,
+          user_id,
+          status,
+          answers
+        }), // Send your form data in the request body
+      });
+      if (response.ok) {
+        // Handle successful save
+        console.log('Data saved successfully', response);
+      } else {
+        // Handle save failure
+        console.error('Failed to save data:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+ } 
+
+
 
     return (
       <div className='m-5  bg-gray-800 '>
@@ -45,9 +72,13 @@ const GroupAccordianPreview = (props: Props) => {
             console.log('Submit called');
             }}></Button>
             
-             <Button title='Draft' handler={() => {
-            console.log('Draft called');
-          }}></Button>
+             <button onClick={() => {
+              console.log('Draft called');
+
+              console.log("all_answers", all_answers);
+              save_answer(data._id, 'ARVIND', 'DRAFT', all_answers);
+              
+          }}>Draft</button>
             
         </div>
         </div>
@@ -56,3 +87,4 @@ const GroupAccordianPreview = (props: Props) => {
 }
 
 export default GroupAccordianPreview;
+

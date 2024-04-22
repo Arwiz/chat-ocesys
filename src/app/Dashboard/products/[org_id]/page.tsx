@@ -30,7 +30,7 @@ const page = async ({ params }: any) => {
         {data?.audits?.map((ob, index) => (
             <div
                 key={index}
-                className="min-w-80 h-32 bg-gray-800 flex items-center justify-center rounded-lg ml-10 mr-10 mt-2 mb-2 shadow-md transition-transform transform hover:scale-105 ]"
+                className="sm:bg-blue-200 md:bg-green-200 md:min-w-80 sm:h-20 md:h-10 md:flex items-center justify-center rounded-lg ml-10 mr-10 mt-2 mb-2 shadow-md transition-transform transform hover:scale-105 ]"
             >
                 <Link href={`/dashboard/products/${params.org_id}/${ob._id}`}>
                     {ob.title}

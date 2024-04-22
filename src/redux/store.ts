@@ -1,5 +1,5 @@
-import profileReducer from './dashboard/profile/profileSlice';
-import auditReducer from '../redux/slices/auditSlice';
+import profileReducer from '../app/dashboard/profile/profileSlice';
+import auditReducer from './slices/auditSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const makeStore = () => {

@@ -20,8 +20,8 @@ const HorizontalListPage = (props: any) => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{props.title}</h1>
-      <div className="flex overflow-x-auto space-x-4">
+      <h1 className="text-3xl font-bold py-10 pl-5">{props.title}</h1>
+      <div className="xm:flex-1 md:flex overflow-x-auto space-x-4">
         {data.map((ob: Orgnization , index: number) => (
           <div
             key={index}

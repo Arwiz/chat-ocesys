@@ -10,7 +10,7 @@ import Remarks from './Remarks';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AnswerType, update_answer } from '@/redux/slices/auditSlice';
-import { RootState } from '@/app/store';
+import { RootState } from '@/redux/store';
 
 interface Props {
     questionData: Question[];
@@ -147,7 +147,7 @@ const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title , gro
             {duration && <CountdownTimer initialTimeInMinutes={duration}></CountdownTimer>}
 
             {/* Current Question */}
-            <h3>{currentQuestion.title}</h3>
+            <h3>{currentQuestion?.title}</h3>
 
             {/* Options */}
             <ul className='justify-items-centerp-10'>
