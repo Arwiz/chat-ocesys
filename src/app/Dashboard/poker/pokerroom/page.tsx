@@ -10,6 +10,7 @@ import { socket } from '@/lib/socket';
 import { Button, Card, Avatar, Dropdown } from 'flowbite-react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
+import { SERVER_API_URL } from '@/utils/fetch-data';
 
 type Props = {
     story: Story;
@@ -51,7 +52,7 @@ const page = (props: any) => {
 
             axios
                 .post(
-                    'http://localhost:3003/api/poker/roomjoin',
+                    `${SERVER_API_URL}/api/poker/roomjoin`,
                     {
                         story_id: selectedStory?._id,
                     },
@@ -85,7 +86,7 @@ const page = (props: any) => {
 
             axios
                 .post(
-                    'http://localhost:3003/api/poker/roomleave',
+                    `${SERVER_API_URL}/api/poker/roomleave`,
                     {
                         story_id: selectedStory?._id,
                     },
@@ -176,7 +177,7 @@ const page = (props: any) => {
 
             axios
                 .post(
-                    'http://localhost:3003/api/poker',
+                    `${SERVER_API_URL}/api/poker`,
                     {
                         story_id: selectedStory?._id,
                         poker: poker,
@@ -211,7 +212,7 @@ const page = (props: any) => {
                 };
                 if (token) {
                     const response = await fetch(
-                        `http://localhost:3003/api/stories/${projectId}`,
+                         `${SERVER_API_URL}/api/stories/${projectId}`,
                         {
                             method: 'GET',
                             headers,

@@ -1,11 +1,13 @@
 import React from 'react'
 import { AuditTableComponent } from '@/components/AuditTable'
+import { BreadcrumbComponent } from '@/atoms/Breadcrubm'
+import { SERVER_API_URL } from '@/utils/fetch-data'
 
 type Props = {}
 
 async function getData(_id?: string) {
 
-  const url = _id ? `http://localhost:3003/audits/${_id}` : `http://localhost:3003/audits`
+  const url = _id ? `${SERVER_API_URL}/audits/${_id}` : `${SERVER_API_URL}/audits`
   const res =  await fetch(url, { cache: 'no-store' })
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
@@ -15,6 +17,14 @@ async function getData(_id?: string) {
   return res.json()
 }
 
+const bcdata = [{
+  title: 'Home',
+  value: '/dashboard'
+},
+  {
+  title: 'Audit',
+  value: '/dashboard/audit'
+}]
 const page = async ({ params }: any) => {
 
   const data = await getData();
@@ -22,7 +32,7 @@ const page = async ({ params }: any) => {
 
   return (
     <>
-      <div>Audit page234</div>
+      <BreadcrumbComponent data ={ bcdata } />
       <AuditTableComponent cols={['paper_id', 'user_id' , 'SubMission Date' ]} rows={data}></AuditTableComponent>
     </>
   )

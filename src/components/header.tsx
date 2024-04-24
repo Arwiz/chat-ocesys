@@ -9,8 +9,12 @@ const links = [
         link: '/dashboard',
     },
     {
-        title: 'Products',
-        link: '/dashboard/products',
+        title: 'Organizations',
+        link: '/dashboard/organizations',
+    },
+     {
+        title: 'Audit',
+        link: '/dashboard/audit',
     },
     {
         title: 'Analytics',

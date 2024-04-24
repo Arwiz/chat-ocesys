@@ -5,10 +5,11 @@ import Question from '@/components/question';
 import QuestionRenderer from '@/components/question';
 import QuestionListRenderer from '@/components/questionlist';
 import GroupAccordian from '@/components/GroupAccordian';
+import { SERVER_API_URL } from '@/utils/fetch-data';
 
 async function getData(Id: string) {
 
-  const res = await fetch(`http://localhost:3003/papers/${Id}`,  { cache: 'no-store' })
+  const res = await fetch(`${SERVER_API_URL}/papers/${Id}`,  { cache: 'no-store' })
   // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
     console.log(res);

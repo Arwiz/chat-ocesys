@@ -8,6 +8,7 @@ import { AuditAnswerType, start_audit } from '@/redux/slices/auditSlice'
 import PreviewModal from './PreviewModal'
 import QuestionListRenderer from './questionlist'
 import { RootState } from '@/redux/store'
+import { SERVER_API_URL } from '@/utils/fetch-data'
 
 type Props = {
   data: any,
@@ -28,7 +29,7 @@ const GroupAccordianPreview = (props: Props) => {
     answers: any) => {
     try {
       // Make the API call to save data
-      const response = await fetch('http://localhost:3003/questions/answers', {
+      const response = await fetch(`${SERVER_API_URL}/questions/answers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

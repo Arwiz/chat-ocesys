@@ -2,6 +2,7 @@
 import ItemList from '@/components/list';
 import StoryCard, { Story } from '@/components/storycard';
 import UserCard from '@/components/usercard';
+import { SERVER_API_URL } from '@/utils/fetch-data';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -40,7 +41,7 @@ const page = (props: Props) => {
                 };
                 if (token) {
                     const response = await fetch(
-                        'http://localhost:3003/api/Docs/PROJECT',
+                        `${SERVER_API_URL}/api/Docs/PROJECT`,
                         {
                             method: 'GET',
                             headers,

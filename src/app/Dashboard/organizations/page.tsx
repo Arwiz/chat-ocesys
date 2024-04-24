@@ -1,5 +1,5 @@
 import { Orgnization } from '@/interface/Organization';
-import HorizontalListPage from '../../components/horizontal_list';
+import HorizontalListPage from '../../../components/horizontal_list';
 import React from 'react';
 import { SERVER_API_URL } from '@/utils/fetch-data';
 
@@ -22,7 +22,7 @@ interface OrganizationProp {
 };
 
 
-const Dashboard : React.FC<OrganizationProp> = async (props) => {
+const Orgnization : React.FC<OrganizationProp> = async (props) => {
 
   const data = await getData();
   console.log("....props", props, data);
@@ -34,4 +34,4 @@ const Dashboard : React.FC<OrganizationProp> = async (props) => {
   </div>
 };  
 
-export default Dashboard;
+export default Orgnization;

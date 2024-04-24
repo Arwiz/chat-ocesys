@@ -3,6 +3,8 @@ import { Accordion } from "flowbite-react";
 import GroupAccordian from '@/components/GroupAccordian';
 import GroupAccordianPreview from '@/components/GroupAccordianPreview';
 import AuditDetail from '@/components/AuditDetail';
+import { BreadcrumbComponent } from '@/atoms/Breadcrubm';
+import { SERVER_API_URL } from '@/utils/fetch-data';
 
 
 type Props = {
@@ -12,14 +14,8 @@ type Props = {
 
 
 async function getData(Id: string) {
- console.log('...audit_id', Id)
-console.log('res...>', `http://localhost:3003/audits/${Id}`);
- 
-  const res = await fetch(`http://localhost:3003/audits/${Id}`,  { cache: 'no-store' })
-  // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
-    console.log('res...>', res);
- 
+
+  const res = await fetch(`${SERVER_API_URL}/audits/${Id}`, { cache: 'no-store' }); 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')
@@ -28,18 +24,28 @@ console.log('res...>', `http://localhost:3003/audits/${Id}`);
   return res.json()
 }
 
-
+const bcdata = [
+  {
+  title: 'Home',
+  value: '/dashboard',
+  },
+  {
+  title: 'Audit',
+  value: '/dashboard/audit',
+  },
+  {
+  title: 'Audit Detail',
+  value: undefined,
+}
+]
 
 const OrganizationAudit = async ({ params }: any) => {
- console.log('Audit...audit_id', params.audit_id)
   const data = await getData(params.audit_id);
-  console.log('Audit...123', data)
-
   return (
-    <div><>
-      <AuditDetail data={data.paper_id} title={'Test ME '} all_answers={data.answers}></AuditDetail>
-      
-    </></div>
+    <div>
+       <BreadcrumbComponent data ={bcdata } />
+      <AuditDetail data={data.paper_id} title={'Test ME '} all_answers={data.answers}></AuditDetail>  
+    </div>
   )
 }
 

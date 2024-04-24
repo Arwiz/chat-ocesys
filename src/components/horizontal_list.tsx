@@ -14,7 +14,7 @@ const HorizontalListPage = (props: any) => {
 
   const callme  = (org: Orgnization) => {
     // props.callback(org.name, "i ma clalled  ");
-    router.push(`dashboard/products/${org._id}`)
+    router.push(`/dashboard/organizations/${org._id}`)
     
   }
 
@@ -25,7 +25,7 @@ const HorizontalListPage = (props: any) => {
         {data.map((ob: Orgnization , index: number) => (
           <div
             key={index}
-            className="min-w-80 m-5 p-5 bg-yellow-400 items-center justify-center rounded-lg border-yellow-100 border-2 hover:bg-yellow-300"
+            className="min-w-80 m-5 p-5 bg-custom-appgreeen items-center justify-center rounded-lg border-yellow-100 border-2 hover:bg-yellow-300"
             onClick={() => {
               console.log(ob._id);
               callme(ob)
