@@ -1,4 +1,4 @@
-import profileReducer from '../app/dashboard/profile/profileSlice';
+import profileReducer from './slices/profileSlice';
 import auditReducer from './slices/auditSlice';
 import { configureStore } from '@reduxjs/toolkit';
 

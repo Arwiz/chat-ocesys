@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrement, increment } from '../app/dashboard/profile/profileSlice'
+import { increment, decrement } from '@/redux/slices/profileSlice';
 
 type Props = {};
 
