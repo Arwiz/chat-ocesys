@@ -60,7 +60,7 @@ const GroupAccordian = (props: Props) => {
           {
             props?.data.groups.map((row:any) => (
 
-                <div onClick={() => setSelectedGroup(row)}
+                <div key={row._id} onClick={() => setSelectedGroup(row)}
                 className={`border-r border-b border-gray-300 p-4 hover:bg-yellow-400 ${
                 selectedGroup === row ? ' bg-yellow-400' : ''
               }`}>

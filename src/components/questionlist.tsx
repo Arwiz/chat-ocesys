@@ -11,7 +11,7 @@ interface Props {
     questionData: Question[];
     duration?: number;
     title?: string
-    all_answers: AuditAnswerType
+    all_answers?: AuditAnswerType
     isDisable?:boolean;
 }
 
@@ -59,7 +59,7 @@ export const QuestionListRendererPreview: React.FC<Props> = ({ questionData, tit
 
     return (
         <div className={` justify-items-center p-5`} >
-            {questionData.map(currentQuestion => <div  className='justify-items-center m-2 py-5 px-10 bg-slate-600 rounded' >                
+            {questionData.map(currentQuestion => <div key={currentQuestion._id}  className='justify-items-center m-2 py-5 px-10 bg-slate-600 rounded' >                
                 <h3 className='text-gray-400'>{currentQuestion.title}</h3>
                 {/* Options */}
                 <ul className='justify-items-center py-5' >

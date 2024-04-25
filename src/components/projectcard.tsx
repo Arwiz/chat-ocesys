@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 type Props = {
     item: any;
-    callBack: (item: any) => void;
+    callBack?: (item: any) => void;
 };
 
 const ProjectCard = ({ item, callBack = (selectedItem: any) => {} }: Props) => {

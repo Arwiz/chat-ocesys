@@ -2,13 +2,13 @@ export const SERVER_API_URL = process.env.SERVER_API_URL;
 
 export const fetchData = async (
     url: string,
-    options: RequestInit = {}
+    options: any = {}
 ): Promise<any> => {
     // Retrieve token from storage
     const token = localStorage.getItem('token');
 
     // Set headers
-    const headers: HeadersInit = {
+    const headers: any = {
         'Content-Type': 'application/json',
     };
 

@@ -16,13 +16,7 @@ async function getData() {
   return res.json()
 }
 
-
-interface OrganizationProp {
-  organizations: Orgnization[]
-};
-
-
-const Orgnization : React.FC<OrganizationProp> = async (props) => {
+const Page = async (props:any) => {
 
   const data = await getData();
   console.log("....props", props, data);
@@ -34,4 +28,4 @@ const Orgnization : React.FC<OrganizationProp> = async (props) => {
   </div>
 };  
 
-export default Orgnization;
+export default Page;

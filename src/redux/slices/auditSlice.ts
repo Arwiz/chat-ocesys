@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../store';
+import type { RootState } from '../store';
 
 export type AnswerType = {
     question_id: string;
@@ -69,6 +69,6 @@ export const auditSlice = createSlice({
 export const { start_audit, save_audit, update_answer } = auditSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.counter.value;
+export const selectAudit = (state: RootState) => state.audit;
 
 export default auditSlice.reducer;

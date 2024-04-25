@@ -53,7 +53,7 @@ const Header = (props: Props) => {
             <div className="sm:pl-5 md:flex   md:float-right justify-end   md:h-14">
                 {links?.map(({ link, title }) => (
                     <div
-                        id={link}
+                        key={link}
                         className="p-5 pt-4 pb-4 hover:text-blue-800 focus:ring-blue-800"
                     >
                         <Link href={link}>{title}</Link>

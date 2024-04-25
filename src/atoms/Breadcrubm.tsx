@@ -20,7 +20,7 @@ export function BreadcrumbComponent(props:Props) {
     return (
           <Breadcrumb aria-label="Solid background breadcrumb example" className="bg-gray-50 px-5 py-3 dark:bg-gray-800 sticky">
             {
-                data.map((bc) => <Breadcrumb.Item className="hover:text-white " href= {bc.value}>{bc.title}</Breadcrumb.Item>)
+                data.map((bc, index) => <Breadcrumb.Item key={index+1} className="hover:text-white " href= {bc.value}>{bc.title}</Breadcrumb.Item>)
             }
            </Breadcrumb>
     

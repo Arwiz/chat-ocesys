@@ -16,7 +16,7 @@ type Props = {
     story: Story;
 };
 
-const page = (props: any) => {
+const PokerPage = (props: any) => {
     const router = useRouter();
     const session = useSession();
 
@@ -70,13 +70,13 @@ const page = (props: any) => {
             // If user register successfully then redirect login page
         } catch (error) {
             console.log(error);
-        } finally {
-        }
+        } 
     };
 
     const leaveRoom = () => {
         try {
             if (!selectedStory?._id) {
+                return; 
             }
             const token = session.data?.user?.token;
             const headers = {
@@ -104,7 +104,6 @@ const page = (props: any) => {
             // If user register successfully then redirect login page
         } catch (error) {
             console.log(error);
-        } finally {
         }
     };
 
@@ -197,7 +196,6 @@ const page = (props: any) => {
             // If user register successfully then redirect login page
         } catch (error) {
             console.log(error);
-        } finally {
         }
     };
 
@@ -227,8 +225,9 @@ const page = (props: any) => {
                     setStories(data);
                 }
             } catch (error) {
-            } finally {
-            }
+                console.log(error);
+            } 
+
         }
         fetStories();
     };
@@ -259,6 +258,7 @@ const page = (props: any) => {
                         >
                             {stories.map((story) => (
                                 <Dropdown.Item
+                                    key={story._id}
                                     onClick={() => setSelectedStory(story)}
                                 >
                                     {story?.name}
@@ -269,7 +269,9 @@ const page = (props: any) => {
                     {selectedStory && (
                         <div className="flex mt-10 mb-4">
                             {participant?.map((user) => (
-                                <div className="flex-1 flex-wrap gap-2">
+                                <div
+                                     key={user._id}
+                                    className="flex-1 flex-wrap gap-2">
                                     <Avatar
                                         alt={user.email}
                                         img="/images/people/default.jpeg"
@@ -295,6 +297,7 @@ const page = (props: any) => {
                                     {selectedStory &&
                                         pokerNumbers.map((num) => (
                                             <Card
+                                                 key={num}
                                                 onClick={() => saveMyPoker(num)}
                                                 className="m-5 p-2 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                                             >
@@ -311,4 +314,4 @@ const page = (props: any) => {
     );
 };
 
-export default page;
+export default PokerPage;

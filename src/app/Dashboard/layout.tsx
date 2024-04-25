@@ -9,7 +9,7 @@ type Props = {
 const DashboardLayout = async (props: Props) => {
     return (
         <>
-            <Header></Header>
+           <Header></Header>
             {props.children}
         </>
     );

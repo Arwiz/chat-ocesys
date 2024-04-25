@@ -13,7 +13,7 @@ import { SERVER_API_URL } from '@/utils/fetch-data'
 type Props = {
   data: any,
   title: string,
-  all_answers: AuditAnswerType
+  all_answers?: AuditAnswerType
 ,}
 
 const GroupAccordianPreview = (props: Props) => {

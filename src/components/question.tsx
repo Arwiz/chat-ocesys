@@ -32,6 +32,7 @@ const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title , gro
     const [showError, setShowError] = useState<boolean>(false);
   
     const dispatch = useDispatch();
+    const router = useRouter()
     
     const allAnswers = useSelector((state: RootState) => state.audit.current_audit?.answers) || {};
     console.log('allAnswers', allAnswers);
@@ -48,9 +49,9 @@ const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title , gro
 
     useEffect(() => {
         // Check if all questions have been attempted
-        const attempted = questionData.every(question =>
-            question._id in allAnswers &&
-            (allAnswers[question._id].length > 0 || allAnswers[question._id].length === 0)
+        const attempted = questionData.every((question: any) => question?._id in allAnswers &&
+                    (allAnswers[question?._id]?.answers?.length > 0 || allAnswers[question?._id]?.answers?.length === 0)
+    
         );
         setAllQuestionsAttempted(attempted);
     }, [allAnswers, questionData]);
@@ -157,10 +158,12 @@ const QuestionRenderer: React.FC<Props> = ({ questionData, duration, title , gro
                             type={currentQuestion.question_type === 'MULTI_SELECT' ? 'checkbox' : 'radio'}
                             id={option._id}
                             name={currentQuestion._id}
-                            checked={currentSelectedOptions?.includes(option._id)}
+                            checked={( option?._id && currentSelectedOptions?.includes(option?._id)) || false}
                             onChange={() => {
                                 console.log('Check', option._id);
+                                if(option?._id){
                                 handleOptionSelect(option._id)
+                                }
                             }}
                         />
                         <label className='p-2' htmlFor={option._id}>{option.title}</label>

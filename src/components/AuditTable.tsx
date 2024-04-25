@@ -20,7 +20,7 @@ export function AuditTableComponent({
       <Table>
               <Table.Head>
                   {
-                      cols?.map((col) => (<Table.HeadCell>{col}</Table.HeadCell>))
+                      cols?.map((col, index) => (<Table.HeadCell key={index+1}>{col}</Table.HeadCell>))
                   }
           {/* <Table.HeadCell>
             <span className="sr-only">Edit</span>
@@ -29,7 +29,7 @@ export function AuditTableComponent({
         <Table.Body className="divide-y">
             {
                           rows?.map((row) => (
-                              row && <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" onClick={() => {
+                              row && <Table.Row key={row._id} className="bg-white dark:border-gray-700 dark:bg-gray-800" onClick={() => {
                                   router.push(`/dashboard/audit/${row?._id}`);
                                }}>
                                   <Table.Cell>{row?.paper_id?.title}</Table.Cell>

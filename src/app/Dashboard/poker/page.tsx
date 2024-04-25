@@ -23,9 +23,9 @@ interface Participant {
     password?: string;
 }
 
-const page = (props: Props) => {
-    const [projects, setProjects] = useState<Project[]>([]);
+const Page: React.FC = (props: Props) => {
 
+    const [projects, setProjects] = useState<Project[]>([]);
     const session = useSession();
     const router = useRouter();
 
@@ -56,8 +56,8 @@ const page = (props: Props) => {
                     setProjects(data);
                 }
             } catch (error) {
-            } finally {
-            }
+                console.log(error);
+            } 
         }
         fetUsers();
     }, [session]);
@@ -75,4 +75,4 @@ const page = (props: Props) => {
     );
 };
 
-export default page;
+export default Page;

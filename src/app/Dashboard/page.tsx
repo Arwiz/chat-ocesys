@@ -16,13 +16,7 @@ async function getData() {
   return res.json()
 }
 
-
-interface OrganizationProp {
-  organizations: Orgnization[]
-};
-
-
-const Dashboard : React.FC<OrganizationProp> = async (props) => {
+const Dashboard  = async (props:any) => {
 
   const data = await getData();
   console.log("....props", props, data);

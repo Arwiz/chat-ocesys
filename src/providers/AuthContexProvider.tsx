@@ -5,9 +5,9 @@ import { createContext } from 'react';
 import { useRouter } from 'next/navigation';
 
 export type AuthContextType = {
-    user: User | undefined;
-    signIn: () => void;
-    signOut: () => void;
+    user?: User | undefined;
+    signIn?: (email: string, passsword: string) => void;
+    signOut?: () => void;
 };
 
 export type User = {
@@ -25,24 +25,23 @@ export const AuthContexProvider = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const [user, setUser] = useState<User | null>();
+    const [user, setUser] = useState<User | undefined>();
     const router = useRouter();
     useEffect(() => {}, []);
 
     const signIn = (email: string, passsword: string) => {
         const person = {
-            email: 'arvind2@gmail.com',
-            passsword: '123',
+            email,
+            passsword,
         };
         setUser(person);
         console.log('this is sign in function');
-
         router.push('/dashboard');
     };
 
     const signOut = () => {
         console.log('this is sign Out function');
-        setUser(null);
+        setUser(undefined);
     };
 
     return (
