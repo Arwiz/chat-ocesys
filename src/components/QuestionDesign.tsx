@@ -63,7 +63,7 @@ export const QuestionDesignPreview = ({ question }: Props) => {
     };
 
 export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => {
-    const { control, register, handleSubmit, setValue, getValues } = useForm<Question>({
+    const { register, handleSubmit, setValue, getValues } = useForm<Question>({
         defaultValues: initialQuestion
     });
     
@@ -90,6 +90,7 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
             setSubCategories([...subCategories, subCategory]);
             setSubCategory(null);               
            }
+            setSubCategory('');    
     };
     
     useEffect(() => {
@@ -118,32 +119,43 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
                         <input className='flex-1 rounded-md text-gray-800' type="text" {...register('title')} />
                     </label>
                     <label className='flex p-2'>
-                        <ul>
+                       
+                    </label>
+                    <label className='flex p-2'>
+                        <span className='min-w-60'>Options (comma-separated):</span>
+                         <div className=' m-2'>
+                                <div>
+                                    <input
+                                        className=' text-gray-800'
+                                        type="text"
+                                        placeholder="Enter option title"
+                                        value={optionTitle}
+                                        onChange={(e) => setOptionTitle(e.target.value)}
+                                    />
+                                    <button type="submit" onClick={handleAddOptiont}>Add Option</button>
+                                </div>
+                            <div className=' m-2'>
+                                <Card className="h-auto max-h-[400px] overflow-y-auto">
+                             <div className="flex-1 flex-wrap max-w-80">
+                                        
                             {options.map((optionText, index) => (
-                                <div className='flex justify-center justify-items-center' key={index}>
-                                    <li>{optionText.title}</li>
-                                    <Button outline className='m-2' onClick={(e) => {
+                                <div className='p-1' key={index}>
+                                                <div className=' flex justify-between border-custom-blue border p-2 rounded-xl'> {optionText.title}
+                                                        <div className='m-1' onClick={(e) => {
                                         setOptions(prevOptions => {
                                             return prevOptions.filter((opt) => opt.title !== optionText.title);
                                         });
                                         e.preventDefault();
                                     }}>
-                                        <HiX className="h-4 w-4" />
-                                    </Button>
+                                        <HiX className="h-4 w-4 hover:text-custom-red" />
+                                        </div>
+                                        </div>
                                 </div>
                             ))}
-                        </ul>
-                    </label>
-                    <label className='flex p-2'>
-                        <span className='min-w-60'>Options (comma-separated):</span>
-                        <input
-                            className=' text-gray-800'
-                            type="text"
-                            placeholder="Enter option title"
-                            value={optionTitle}
-                            onChange={(e) => setOptionTitle(e.target.value)}
-                        />
-                        <button type="submit" onClick={handleAddOptiont}>Add Option</button>
+                                </div>
+                        </Card>
+                            </div>
+                            </div>
                     </label>
                     <label className='flex p-2'>
                         <span className='min-w-60 '>Remarks:</span>
@@ -165,59 +177,43 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
                     <label className='flex p-2'>
                         <span className='min-w-60'>Sub Category:</span>
                         <div>
-                        <div>
-                        <input
-                            className=' text-gray-800'
-                            type="text"
-                            placeholder="Enter option title"
-                            value={subCategory}
-                            onChange={(e) => setSubCategory(e.target.value)}
-                        />
-                            <button type="submit" onClick={handleAddSubCategory}>Add Sub Category</button>
-                        </div>
-                        <div>
-                            <ul>
-                            {
-                                subCategories.map((subcat, index) => (
-                                <div className='flex justify-center justify-items-center' key={index}>
-                                    <li className=' flex justify-start'> {subcat}
-                                            <div className='m-2' onClick={(e) => {
-                                                setSubCategories(prevOptions => {
-                                                    return prevOptions.filter((opt) => opt !==  subcat);
-                                                });
-                                                e.preventDefault();
-                                            }}>
-                                                <HiX className="h-4 w-4" />
-                                             </div>
-                                        </li>
+                            <div>
+                                <input
+                                    className=' text-gray-800'
+                                    type="text"
+                                    placeholder="Enter option title"
+                                    value={subCategory}
+                                    onChange={(e) => setSubCategory(e.target.value)}
+                                />
+                                <button type="submit" onClick={handleAddSubCategory}>Add Sub Category</button>
+                             </div>
+                        <div className='m-2'>
+                                <Card className="h-auto max-h-[400px] overflow-y-auto">
+                                    <div className="flex flex-wrap max-w-80">
+                                        
+                                        {
+                                            subCategories.map((subcat, index) => (
+                                            <div className='p-1' key={index}>
+                                                <div className='  flex justify-between border-custom-appgreeen border p-2 rounded-xl'> {subcat}
+                                                        <div className='m-1' onClick={(e) => {
+                                                            e.preventDefault();
+                                                            setSubCategories(prevOptions => {
+                                                                return prevOptions.filter((opt) => opt !==  subcat);
+                                                            });
+                                                        }}>
+                                                            <HiX className="h-4 w-4 hover:text-custom-red" />
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </ul>
+                                </Card>
                             </div>
                         </div>
                     </label>
                     <label className='flex p-2 '>
-                        <ul>
-                            {
-                                subCategories.map((subcat, index) => (
-                                <div className='flex justify-center justify-items-center' key={index}>
-                                    <li>{subcat}</li>
-                                    <Button outline className='m-2' onClick={(e) => {
-                                        setSubCategories(prevOptions => {
-                                            return prevOptions.filter((opt) => opt !==  subcat);
-                                        });
-                                        e.preventDefault();
-                                    }}>
-                                        <HiX className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                            ))}
-                        </ul>
-                        
-                     </label>
-                    <label className='flex p-2 '>
                         <span className='min-w-60 '>Question Type:</span>
-                        <select className=' text-gray-700' {...register("options")} value={getValues('options')} onSelect={(option)=>setValue('options' , option)}>
+                        <select className=' text-gray-700' {...register("question_type")} value={getValues('question_type')} onSelect={(option)=>setValue('question_type' , option)}>
                             {
                                 Object.values(QuestionType).map((item) => <option value={item}>{item}</option>)
                             }
@@ -228,6 +224,13 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
                         <span className='min-w-60'>Question Status:</span>
                         <input className='flex-1 text-gray-800' type="text" {...register('question_status')} />
                     </label>
+                </div>
+                <div>
+                    <Button onClick={() => {
+                        console.log('Testing', getValues());
+                        
+
+                    }}>Save Question</Button>
                 </div>
             </form>
         </Card>)
