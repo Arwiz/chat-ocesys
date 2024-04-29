@@ -2,10 +2,13 @@ import { Button } from 'flowbite-react';
 import React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 
+
 export type KeyVal = {
+    title?: string;
     titleKey: string;
-    value: string;
+    value?: string;
 };
+
 
 export const KeyValue = (props: KeyVal) => {
     return (

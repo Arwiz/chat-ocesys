@@ -10,4 +10,5 @@ export enum QuestionType {
     COST = 'COST',
     FILE = 'FILE',
     LOG = 'LOG',
+    YEN_NO_NA = 'YEN_NO_NA',
 }

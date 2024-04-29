@@ -29,7 +29,7 @@ export function AuditTableComponent({
         <Table.Body className="divide-y">
             {
                           rows?.map((row) => (
-                              row && <Table.Row key={row._id} className="bg-white dark:border-gray-700 dark:bg-gray-800" onClick={() => {
+                              row && <Table.Row key={row._id} className="bg-white dark:border-gray-700 dark:bg-gray-800 hover:bg-custom-purple hover:text-white " onClick={() => {
                                   router.push(`/dashboard/audit/${row?._id}`);
                                }}>
                                   <Table.Cell>{row?.paper_id?.title}</Table.Cell>

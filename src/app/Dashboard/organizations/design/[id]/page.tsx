@@ -1,10 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import { Accordion, Button } from 'flowbite-react';
-import Question from '@/components/question';
-import QuestionRenderer from '@/components/question';
-import QuestionListRenderer from '@/components/questionlist';
-import GroupAccordian from '@/components/GroupAccordian';
+import { PaperDesigner } from '@/components/PaperDesigner'
+import React from 'react'
+
+
 import { SERVER_API_URL } from '@/utils/fetch-data';
 
 async function getData(Id: string) {
@@ -18,7 +15,8 @@ async function getData(Id: string) {
  
   return res.json()
 }
- 
+
+type Props = {}
 
 type ParamProps = {
   id: String,
@@ -29,9 +27,14 @@ const page = async ({ params }: any) => {
   const data = await getData(params.id);
   console.log('....data', data);
  
-  return <div className="flex-1">
-    <GroupAccordian data={data}></GroupAccordian>
-  </div>
-};
+  return (
+      <div>
+          <>Template Design</>
+          <PaperDesigner data={data}>
+              
+          </PaperDesigner>
+      </div>
+  )
+}
 
-export default page;
+export default page

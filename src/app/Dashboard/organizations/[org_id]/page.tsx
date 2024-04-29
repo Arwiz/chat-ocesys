@@ -2,6 +2,15 @@ import { SERVER_API_URL } from '@/utils/fetch-data';
 import Link from 'next/link';
 import React from 'react';
 
+import { CommonTable } from '@/components/CommonTable';
+import { KeyVal } from '@/components/keyval';
+import { Heading500 } from '@/atoms/Heading';
+import { AddButton } from '@/atoms/AddButton';
+import { HeaderRow } from '@/atoms/HeaderRow';
+import { AddAuditComponent } from '@/components/AddAuditModal';
+import { redirect } from 'next/navigation';
+import { PaperList } from '@/components/PaperList';
+
 async function getData(org_id: string) {
   const res = await fetch(`${SERVER_API_URL}/organizations/${org_id}`, { cache: 'no-store' })
   // The return value is *not* serialized
@@ -15,35 +24,20 @@ async function getData(org_id: string) {
  
   return res.json()
 }
- 
 
-const page = async ({ params }: any) => {
+const Page = async ({ params }: any) => {
 
+    const org_id = params.org_id;
     const data = await getData(params.org_id);
-    const callBack = (id: string) => {
-        console.log(" i am called", id)
+    const onClickHandler = (row: any) => {
+      console.log(" i am called", row)
+      redirect('/dashboard/organizations/design/' + row._id)
     }
- 
 
-    return (<div className=" min-h-screen min-w-full">
-        <h2 className=' m-10 p-5'>Audit Templates</h2> 
-        <div className='flex'>
-            {
-                data?.audits?.map((ob: any, index: number) => (
-                    <div
-                        key={index}
-                        // className="min-w-80 m-5 p-5 bg-custom-appgreeen items-center justify-center rounded-lg border-yellow-100 border-2 hover:bg-yellow-300"
-                        className="flex w-60 min-h-60 bg-custom-appgreeen sm:h-20 md:h-10 items-center justify-center rounded-lg ml-10 mr-10 mt-2 mb-2 shadow-md transition-transform text-black transform hover:scale-105  border-yellow-100 border-2 hover:bg-custom-purple hover:text-white ]"
-                    >
-                        <Link href={`/dashboard/organizations/${params.org_id}/${ob._id}`}>
-                            {ob.title}
-                        </Link>
-                    </div>
-                ))
-            }
-        </div>
-
+  return (<div className=" bg-custom-dark">
+    <HeaderRow />
+    <PaperList data={data}></PaperList>
     </div>)
 };
 
-export default page;
+export default Page;
