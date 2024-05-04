@@ -8,9 +8,8 @@ type Props = {}
 
 export const HeaderRow = (props: Props) => {
   return (
-      <div className=' flex justify-between mx-10 my-5'>
+      <div className=' flex justify-between mx-5'>
           <Heading500>Audit Templates</Heading500>
-          <AddAuditComponent />
       </div>
   )
 }

@@ -10,33 +10,33 @@ import { HeaderRow } from '@/atoms/HeaderRow';
 import { AddAuditComponent } from '@/components/AddAuditModal';
 import { redirect } from 'next/navigation';
 import { PaperList } from '@/components/PaperList';
+import { unstable_cache } from 'next/cache';
+import { callPaperPaginations } from '@/lib/api.paper';
+import { OrganizationContextProvider } from '@/context/OrganizationContextProvider';
 
-async function getData(org_id: string) {
-  const res = await fetch(`${SERVER_API_URL}/organizations/${org_id}`, { cache: 'no-store' })
-  // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
-    console.log(res);
- 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
-  }
- 
-  return res.json()
-}
+
 
 const Page = async ({ params }: any) => {
 
     const org_id = params.org_id;
-    const data = await getData(params.org_id);
+    const data = await callPaperPaginations(params.org_id , 1,10);
     const onClickHandler = (row: any) => {
       console.log(" i am called", row)
       redirect('/dashboard/organizations/design/' + row._id)
     }
+  
+    
 
-  return (<div className=" bg-custom-dark">
-    <HeaderRow />
-    <PaperList data={data}></PaperList>
+  return (<div className=" bg-custom-dark">     
+    <div className=' flex justify-between'>
+      
+          <HeaderRow />
+            <OrganizationContextProvider orgnization_id={ org_id}>
+              <AddAuditComponent />
+           </OrganizationContextProvider>
+          </div>
+          <span className=' font-bold'> Template </span>
+        <PaperList data={data}></PaperList>
     </div>)
 };
 

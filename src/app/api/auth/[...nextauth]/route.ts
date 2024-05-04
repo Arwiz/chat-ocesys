@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from 'axios';
 import page from '@/app/auth/signup/page';
 import type { NextAuthOptions } from 'next-auth';
+import { SERVER_API_URL } from '@/utils/fetch-data';
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -17,13 +18,13 @@ export const authOptions: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials, req) {
-                console.log('credentials ==== >', credentials);
+                console.log('credentials ==== >', SERVER_API_URL);
                 const headers = {
                     'Content-Type': 'application/json',
                 };
                 try {
                     const response = await axios.post(
-                        `${process.env.SERVER_API_URL || 'http://localhost:3000'}/login`,
+                        `${SERVER_API_URL || 'http://localhost:3000'}/login`,
                         {
                             email: credentials?.email,
                             password: credentials?.password,

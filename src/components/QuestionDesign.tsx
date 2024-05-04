@@ -2,31 +2,22 @@ import { HeadingDesignNormal } from '@/atoms/Heading';
 import { QuestionType } from '@/types/question_type_enum';
 import { Button, Card, Dropdown, Label, TextInput } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { HiCog, HiCurrencyDollar, HiLockClosed, HiLogout, HiViewGrid, HiX } from 'react-icons/hi';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { usePaperContext } from '@/context/PaperContextProvider';
+import { Question } from '@/types/questions';
 
 
-interface Option {
-  title: string;
-  serialNumber?: number;
-  _id?: string;
-}
-
-interface Question {
-  title: string;
-  options: Option[];
-  remarks?: boolean;
-  uploads?: boolean;
-  category?: string;
-  sub_category?: string[];
-  question_type?: string;
-  question_status?: string;
-}
 
 interface Props {
   question?: Question;
   onSave: (updatedQuestion: Question) => void;
 }
+
+
 
 
 export const QuestionDesignPreview = ({ question }: Props) => {
@@ -39,13 +30,12 @@ export const QuestionDesignPreview = ({ question }: Props) => {
                 <Label>{question.title}</Label>
           <div />
           {
-              question?.options.map((opt:any) => <div>
-                  <li>{opt.title}</li>
-              </div>)
+                question?.options.map((opt: any) =>
+                    <div>
+                        <li>{opt.title}</li>
+                    </div>)
           }
-          
-          {/* <Button>Save</Button> */}
-          </div>
+           </div>
     </Card>
         </div>
   )
@@ -63,8 +53,26 @@ export const QuestionDesignPreview = ({ question }: Props) => {
     };
 
 export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => {
-    const { register, handleSubmit, setValue, getValues } = useForm<Question>({
-        defaultValues: initialQuestion
+
+     const { add_question } = usePaperContext();
+   
+    const questionsSchema = z.object({
+        title: z.string().min(3, { message: 'Title is required' }),
+        options: z.array(z.object({
+            title: z.string().min(1, { message: 'Option is required' }),
+            serialNumber: z.number().optional(),
+        })),
+        uploads: z.boolean(),
+        remarks: z.boolean(),
+        category:  z.string().optional(),
+        sub_category:  z.array(z.string()).optional(),
+        question_type: z.nativeEnum(QuestionType),
+        question_status:  z.string(),
+     });
+
+    const { register, handleSubmit, setValue, getValues,  formState: { errors, isLoading }, } = useForm<Question>({
+        defaultValues: initialQuestion,
+        resolver: zodResolver(questionsSchema) 
     });
     
     const [options, setOptions] = useState<{ title: string }[]>([]);
@@ -72,6 +80,9 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
     const [subCategory, setSubCategory] = useState<string|null>(null);
 
     const [optionTitle, setOptionTitle] = useState('');
+
+    
+
 
     const handleAddOptiont = (e) => {
         e.preventDefault();
@@ -112,17 +123,23 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
 
     return (
         <Card className=' h-full'>
-            <form className='flex-1 min-h-96'>
-                <div className='flex flex-col'>
-                    <label className='flex p-2'>
+            <form className='flex-1 min-h-96' onSubmit={handleSubmit((question: Question) => {
+                console.log('question...', question);
+                onSave(question)  
+                console.log('question...2', question);
+            })}>
+                <div className='flex flex-col  divide-y divide-solid '>
+                    <label className='flex p-5'>
                         <span className='min-w-60'>Title:</span>
-                        <input className='flex-1 rounded-md text-gray-800' type="text" {...register('title')} />
+                        <div>
+                        <input className='flex-1 peer-invalid rounded-md text-gray-800' type="text" {...register('title')} />
+                            {errors?.title && <p className="mt-2 peer-invalid:visible text-pink-600 text-sm">
+                                {errors.title.message}</p>}
+                        </div>
                     </label>
-                    <label className='flex p-2'>
-                       
-                    </label>
-                    <label className='flex p-2'>
-                        <span className='min-w-60'>Options (comma-separated):</span>
+                   
+                    <label className='flex p-5'>
+                        <span className='min-w-60'>Options:</span>
                          <div className=' m-2'>
                                 <div>
                                     <input
@@ -132,7 +149,7 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
                                         value={optionTitle}
                                         onChange={(e) => setOptionTitle(e.target.value)}
                                     />
-                                    <button type="submit" onClick={handleAddOptiont}>Add Option</button>
+                                    <button className='mx-5 outline outline-custom-green rounded-2xl hover:outline-custom-purple p-2' type="submit" onClick={handleAddOptiont}>Add Option</button>
                                 </div>
                             <div className=' m-2'>
                                 <Card className="h-auto max-h-[400px] overflow-y-auto">
@@ -153,28 +170,25 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
                                 </div>
                             ))}
                                 </div>
-                        </Card>
-                            </div>
-                            </div>
+                          </Card>
+                         </div>
+                        </div>
                     </label>
-                    <label className='flex p-2'>
+                    <label className='flex p-5'>
                         <span className='min-w-60 '>Remarks:</span>
                         <input type='checkbox' {...register('remarks')} />
       
                     </label>
-                    <label className='flex p-2'>
+                    <label className='flex p-5'>
                         <span className='min-w-60'>Uploads:</span>
                         <input  className=' text-gray-800' type='checkbox' {...register('uploads')} />
                     </label>
-                    <label className='flex p-2'>
+                    <label className='flex p-5'>
                         <span className='min-w-60'>Category:</span>
                         <input className='flex-1 text-gray-800' type="text" {...register('category')} />
                     </label>
-                    {/* <label className='flex p-2'>
-                        <span className='min-w-60'>Sub Category :</span>
-                        <input className='flex-1 text-gray-800' type="text" {...register('sub_category')} />
-                    </label> */}
-                    <label className='flex p-2'>
+
+                    <label className='flex p-5'>
                         <span className='min-w-60'>Sub Category:</span>
                         <div>
                             <div>
@@ -185,7 +199,7 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
                                     value={subCategory}
                                     onChange={(e) => setSubCategory(e.target.value)}
                                 />
-                                <button type="submit" onClick={handleAddSubCategory}>Add Sub Category</button>
+                                <button className='mx-5 outline outline-custom-green rounded-2xl hover:outline-custom-purple p-2' type="submit" onClick={handleAddSubCategory}>Add Sub Category</button>
                              </div>
                         <div className='m-2'>
                                 <Card className="h-auto max-h-[400px] overflow-y-auto">
@@ -211,26 +225,24 @@ export const QuestionDesign: React.FC<Props> = ({ question, onSave }: Props) => 
                             </div>
                         </div>
                     </label>
-                    <label className='flex p-2 '>
+                    <label className='flex p-5 '>
                         <span className='min-w-60 '>Question Type:</span>
-                        <select className=' text-gray-700' {...register("question_type")} value={getValues('question_type')} onSelect={(option)=>setValue('question_type' , option)}>
+                        <select className=' text-gray-700' {...register("question_type")}>
                             {
-                                Object.values(QuestionType).map((item) => <option value={item}>{item}</option>)
+                                Object.values(QuestionType).map((item) => <option value={item} onSelect={(option) => {
+                                    setValue('question_type', option)
+                                }}>{item}</option>)
                             }
                         </select>
                     </label>
                     
-                    <label className='flex p-2 '>
+                    <label className='flex p-5 '>
                         <span className='min-w-60'>Question Status:</span>
                         <input className='flex-1 text-gray-800' type="text" {...register('question_status')} />
                     </label>
                 </div>
                 <div>
-                    <Button onClick={() => {
-                        console.log('Testing', getValues());
-                        
-
-                    }}>Save Question</Button>
+                   { isLoading ? <div>Loading</div> :  <Button type='submit' outline className='mx-5 outline outline-custom-green rounded-2xl hover:outline-custom-purple p-2'>Save Question</Button>}
                 </div>
             </form>
         </Card>)

@@ -3,23 +3,25 @@
 import { AddButton } from "@/atoms/AddButton";
 import { useEffect, useState } from "react";
 import { Modal, Checkbox, Label, TextInput, Button } from "flowbite-react";
-// import { SERVER_API_URL } from "@/utils/fetch-data";
 import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
+import { SERVER_API_URL } from "@/utils/fetch-data";
+import { useRouter } from "next/navigation";
+import { useOrganizationContext } from "@/context/OrganizationContextProvider";
 
-
-
-const SERVER_API_URL =   process.env.SERVER_API_URL;
 
 export function AddAuditComponent() {
-    const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const organizationContext  =  useOrganizationContext()
 
-     const [title, setTitle] = useState<string | undefined>('');
+  const [title, setTitle] = useState<string | undefined>('');
+  
+  const router = useRouter();
 
 
     const create_template = () => {
         
-        console.log('create_template', title);
+        console.log('create_template', SERVER_API_URL);
         if (title?.trim()?.length > 0) {
              save_templatae_on_server(title , 'singhd')
         }
@@ -27,22 +29,22 @@ export function AddAuditComponent() {
     }
   
   const save_templatae_on_server = async (title: string, org_id: string) => {
-    const session = await getSession();
-    console.log(title, org_id, SERVER_API_URL );
-
+      const session = await getSession();
+    console.log('SERVER_API_URL => ', SERVER_API_URL, session );
     try
-      {
+    {
+      
       // Make the API call to save data
-      const response = await fetch(`${SERVER_API_URL}/papers/add`, {
+      const response = await fetch(`${SERVER_API_URL}/api/papers`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Authorization': 'Bearer ' + session?.token
-                    'Authorization': '' + session?.token
+                    'Authorization': '' + session?.user.token
                 },
                 body: JSON.stringify({
                     title,
-                    // orgnization_id : undefined
+                    organization_id : organizationContext?.organization_id
                 }),
         // Send your form data in the request body
       });
@@ -51,6 +53,7 @@ export function AddAuditComponent() {
             // Handle successful save
           console.log('Data saved successfully', response);
           setOpenModal(false)
+          router.refresh();
         } else {
             // Handle save failure
             console.error('Failed to save data:', response.statusText);
@@ -72,7 +75,7 @@ export function AddAuditComponent() {
     <>
       <AddButton  handller={() => setOpenModal(true)}>New Template</AddButton>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>New Template</Modal.Header>
+        <Modal.Header>New Template{ organizationContext?.organization_id}</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
              <form className="flex max-w-md flex-col gap-4">

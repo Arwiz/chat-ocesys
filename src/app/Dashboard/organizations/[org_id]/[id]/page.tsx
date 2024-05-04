@@ -27,7 +27,7 @@ type ParamProps = {
 const page = async ({ params }: any) => {
   console.log('params', params);
   const data = await getData(params.id);
-  console.log('....data', data);
+  console.log('....data arvind', SERVER_API_URL);
  
   return <div className="flex-1">
     <GroupAccordian data={data}></GroupAccordian>

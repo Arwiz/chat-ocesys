@@ -5,17 +5,24 @@ import { HeaderRow } from '@/atoms/HeaderRow'
 import { HeadingDesignNormal } from '@/atoms/Heading'
 import { AddQuestionComponent } from './AddQuestionModal'
 import { Question } from '@/types/questions'
+import { usePaperContext } from '@/context/PaperContextProvider'
+import { KeyVal } from '@/atoms/KeyVal'
+import { Group } from '@/types/group'
 
 type Props = {
-    data: any
+    data: Group
 }
 
-export const GroupDesign = ({data}: Props) => {
+export const GroupDesign = ({ data }: Props) => {
+    // const setGroupId = () =>
+    
+    
   return (
-      <div className=' bg-slate-500 my-10'>
-          <Card>
-          <HeadingDesignNormal>Group Design</HeadingDesignNormal>
-          <div>
+      <div className=''>
+          <div className='mx-5py-5'>
+              <KeyVal title='' value={data.title} />
+            </div>
+          <div className='mx-5 py-5'>
               {
                       data?.questions?.map((ques_data: any) => <QuestionDesignPreview key={ques_data._id} question={ques_data} onSave={() => {
                       console.log('sdfsfds')
@@ -23,13 +30,12 @@ export const GroupDesign = ({data}: Props) => {
               }
                   <div />
                   <div className=' flex justify-end'>
-                    <div className=' flex w-80 justify-around my-5'>
-                        <AddQuestionComponent></AddQuestionComponent>
-                        <Button> Upload Question 1</Button>
+                    <div className=' flex justify-around my-5'>
+                      <AddQuestionComponent data={data}>Add Question</AddQuestionComponent>
+                      <AddQuestionComponent data={data}>Upload Questions</AddQuestionComponent>
                     </div>
                 </div>
               </div>
-              </Card>
       </div>
   )
 }

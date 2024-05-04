@@ -10,10 +10,12 @@ export interface Option {
 export interface Question {
     _id?: string;
     title: string;
-    major_id: string;
-    category: string;
-    sub_category: string[] | undefined;
-    question_type: QuestionType;
+    major_id?: string;
+    category?: string;
+    remarks?: boolean;
+    uploads?: boolean;
+    sub_category?: string[] | undefined;
+    question_type?: QuestionType;
     question_status: StatusType;
     options: Option[];
     createdAt: Date;

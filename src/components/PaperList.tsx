@@ -3,6 +3,7 @@ import { redirect, useRouter } from 'next/navigation'
 import React from 'react'
 import { CommonTable } from './CommonTable'
 import { KeyVal } from './keyval'
+import { AddButton } from '@/atoms/AddButton'
 
 export type Props = {
     data: any
@@ -27,11 +28,21 @@ export const PaperList = ({ data }: Props) => {
       console.log(" i am called", row)
       router.push(`/dashboard/organizations/design/${row._id}`)
     }
+  
+    const addNewTemplate = () => {
+      console.log(" i am called", row)
+    }
+  
+  const pageChangeHandler = (page: number) => {
+      
+    }
+  
 
     return (<div className=" bg-custom-dark">
-            <div>PaperList</div>
-        <CommonTable cols={colsData} rows={data.audits} onClickHandler={onClickHandler} />
-        <CommonTable cols={colsData} rows={data.common_audits} onClickHandler={onClickHandler} /> 
+      <div>PaperList</div>
+           <AddButton handller={addNewTemplate}> Add New Template</AddButton>
+            <CommonTable cols={colsData} rows={data.papers} totalPages={data.totalItems} onClickHandler={onClickHandler} pageChangeHandler={pageChangeHandler} />
+            <CommonTable cols={colsData} rows={data.papers} totalPages={data.totalItems} onClickHandler={onClickHandler} pageChangeHandler={pageChangeHandler}  /> 
         </div>
   )
 }

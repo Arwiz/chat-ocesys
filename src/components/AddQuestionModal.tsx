@@ -7,36 +7,29 @@ import { Modal, Checkbox, Label, TextInput, Button } from "flowbite-react";
 import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 import { QuestionDesign } from "./QuestionDesign";
+import { usePaperContext } from "@/context/PaperContextProvider";
 
 
 type Props = {
-    children: React.ReactNode,
+  children: React.ReactNode,
+  data: any
 }
 
 const SERVER_API_URL =   process.env.SERVER_API_URL;
 
-export function AddQuestionComponent({children}: Props) {
+export function AddQuestionComponent({children, data}: Props) {
     const [openModal, setOpenModal] = useState(false);
 
-     const [title, setTitle] = useState<string | undefined>('');
-
-
-    const create_template = () => {
-        
-        console.log('create_template', title);
-       
-
-    }
-  
-  const save_templatae_on_server = async (title: string, org_id: string) => {
+  const [title, setTitle] = useState<string | undefined>('');
+    
+  const save_question_to_paper_group = async (title: string, org_id: string) => {
     const session = await getSession();
     console.log(title, org_id, SERVER_API_URL );
-
     try
       {
       // Make the API call to save data
-      const response = await fetch(`${SERVER_API_URL}/papers/add`, {
-                method: 'POST',
+      const response = await fetch(`${SERVER_API_URL}/papers`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Authorization': 'Bearer ' + session?.token
@@ -61,7 +54,7 @@ export function AddQuestionComponent({children}: Props) {
       console.error('Error saving data:', error);
      }
     
-}
+  }
 
     
     useEffect(() => {
@@ -74,16 +67,16 @@ export function AddQuestionComponent({children}: Props) {
     <div>
       <AddButton  handller={() => setOpenModal(true)}>{children}</AddButton>
       <Modal size={'7xl'}   show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Add Question 1</Modal.Header>
+        <Modal.Header>Add Question</Modal.Header>
               <Modal.Body>
                    <div className="space-y-6 overflow-y-auto">
-                  <QuestionDesign onSave={() => {
-                      console.log('On save');
-                      }} ></QuestionDesign>
-                      </div>
+                      <QuestionDesign onSave={(question) => {
+                          console.log('On save', question);
+                          }} ></QuestionDesign>
+                          </div>
         </Modal.Body>
         <Modal.Footer className=" justify-end">
-          <Button onClick={create_template}>Create</Button>
+          {/* <Button onClick={create_template}>Create</Button> */}
           <Button color="gray" onClick={() => setOpenModal(false)}>
             Decline
           </Button>
