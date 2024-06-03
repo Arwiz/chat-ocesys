@@ -1,15 +1,18 @@
-// Import getSession function from next-auth/client
-import { getSession } from 'next-auth/react';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth';
 
 // Define a function to make authenticated fetch requests
-const fetchWithToken = async (
+export const fetchWithToken = async (
     url: string,
-    method_type: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'
+    method_type: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE',
+    payLoad?: any
 ) => {
     try {
-        // Retrieve session
-        const session = await getSession();
-        if (!session || !session.token) {
+        const session = await getServerSession(authOptions);
+
+        console.log('Fetching session', session);
+
+        if (!session || !session?.user.token) {
             throw new Error('User session not found or access token missing');
         }
 

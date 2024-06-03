@@ -4,7 +4,6 @@ import React from 'react'
 
 import { SERVER_API_URL } from '@/utils/fetch-data';
 import { PaperContextProvider } from '@/context/PaperContextProvider';
-import { fetchWithToken } from '@/lib/util';
 import { useSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';

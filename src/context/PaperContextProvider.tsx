@@ -75,7 +75,7 @@ export const PaperContextProvider = ({ children, initPaper }: { children: React.
   
   
   const set_current_group = (group: Group) => { 
-        const allQuestions = [...group?.questions];
+        const allQuestions = [...group.questions];
         setQuestions(allQuestions);
         setCurrentGroup(group);
     }

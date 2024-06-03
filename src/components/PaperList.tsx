@@ -6,7 +6,8 @@ import { KeyVal } from './keyval'
 import { AddButton } from '@/atoms/AddButton'
 
 export type Props = {
-    data: any
+  data: any,
+  pageChangeHandler: (orgId: string, page: number, limit: number) => void
 }
 
 const colsData: KeyVal[] = [
@@ -21,7 +22,7 @@ const colsData: KeyVal[] = [
 ]
 
 
-export const PaperList = ({ data }: Props) => {
+export const PaperList = ({ data, pageChangeHandler }: Props) => {
     const router = useRouter();
 
     const onClickHandler = (row: any) => {
@@ -33,16 +34,12 @@ export const PaperList = ({ data }: Props) => {
       console.log(" i am called", row)
     }
   
-  const pageChangeHandler = (page: number) => {
-      
-    }
   
 
     return (<div className=" bg-custom-dark">
       <div>PaperList</div>
            <AddButton handller={addNewTemplate}> Add New Template</AddButton>
             <CommonTable cols={colsData} rows={data.papers} totalPages={data.totalItems} onClickHandler={onClickHandler} pageChangeHandler={pageChangeHandler} />
-            <CommonTable cols={colsData} rows={data.papers} totalPages={data.totalItems} onClickHandler={onClickHandler} pageChangeHandler={pageChangeHandler}  /> 
         </div>
   )
 }

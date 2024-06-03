@@ -1,3 +1,5 @@
+'use server';
+
 import { SERVER_API_URL } from '@/utils/fetch-data';
 
 export const callPaperPaginations = async (

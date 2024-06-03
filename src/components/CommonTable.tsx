@@ -13,7 +13,7 @@ type Props = {
     rows: any[],
     totalPages?: number,
     onClickHandler: (row: any) => void,
-    pageChangeHandler: (page:number) => void
+    pageChangeHandler: (orgId: number, page:number, limit: number ) => void
 }
 
 export const CommonTable = ({ cols, rows, totalPages=1, onClickHandler, pageChangeHandler }: Props) => {
@@ -57,16 +57,6 @@ const router = useRouter();
              }
             </Table.Body>
           </Table>
-          <div className="flex overflow-x-auto sm:justify-center">
-             <Dropdown className=' outline bg-custom-appgreeen' label={`Limit: ${limit}`}>
-                <Dropdown.Item onClick={() => handleLimitChange(10)}>10</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleLimitChange(20)}>20</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleLimitChange(50)}>50</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleLimitChange(100)}>100</Dropdown.Item>
-            </Dropdown>
-              
-           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
-        </div>
       </div>
   )
 }

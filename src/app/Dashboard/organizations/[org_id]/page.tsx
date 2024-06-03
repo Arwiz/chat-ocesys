@@ -8,24 +8,27 @@ import { Heading500 } from '@/atoms/Heading';
 import { AddButton } from '@/atoms/AddButton';
 import { HeaderRow } from '@/atoms/HeaderRow';
 import { AddAuditComponent } from '@/components/AddAuditModal';
-import { redirect } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import { PaperList } from '@/components/PaperList';
 import { unstable_cache } from 'next/cache';
 import { callPaperPaginations } from '@/lib/api.paper';
 import { OrganizationContextProvider } from '@/context/OrganizationContextProvider';
+import { PaginationComponent } from '@/components/Pagination';
 
 
 
-const Page = async ({ params }: any) => {
+const Page = async ({ params, searchParams }: any) => {
 
     const org_id = params.org_id;
-    const data = await callPaperPaginations(params.org_id , 1,10);
+  let data = await callPaperPaginations(params.org_id, searchParams.page || 0, searchParams.limit || 10);
+  
     const onClickHandler = (row: any) => {
       console.log(" i am called", row)
       redirect('/dashboard/organizations/design/' + row._id)
     }
   
-    
+  
+  
 
   return (<div className=" bg-custom-dark">     
     <div className=' flex justify-between'>
@@ -36,7 +39,10 @@ const Page = async ({ params }: any) => {
            </OrganizationContextProvider>
           </div>
           <span className=' font-bold'> Template </span>
-        <PaperList data={data}></PaperList>
+      <PaperList data={data} pageChangeHandler={callPaperPaginations}></PaperList>
+    <PaginationComponent totalPages={data.totalItems}></PaginationComponent>
+
+
     </div>)
 };
 
